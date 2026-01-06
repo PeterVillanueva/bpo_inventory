@@ -7,11 +7,8 @@ export default function Home() {
   const router = useRouter();
 
   useEffect(() => {
-    // Check if user is logged in
-    const token = document.cookie
-      .split('; ')
-      .find((row) => row.startsWith('token='))
-      ?.split('=')[1];
+    // Check if user is logged in (check localStorage)
+    const token = localStorage.getItem('token');
 
     if (token) {
       // Try to decode token to get role

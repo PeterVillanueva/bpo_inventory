@@ -43,8 +43,11 @@ Enterprise-grade inventory management system with QR scanning, manual fallback, 
 3. **Set up environment variables**
    Create a `.env.local` file:
    ```env
-   MONGODB_URI=mongodb://localhost:27017/bpo_inventory
-   JWT_SECRET=your-secret-key-change-in-production
+   MONGODB_URI=mongodb://localhost:27017/bpoinventory
+   # OR for MongoDB Atlas:
+   # MONGODB_URI=mongodb+srv://username:password@cluster.mongodb.net/bpoinventory
+   
+   JWT_SECRET=your-secret-key-change-in-production-minimum-32-characters
    NODE_ENV=development
    ```
 
@@ -86,19 +89,24 @@ Enterprise-grade inventory management system with QR scanning, manual fallback, 
 
 ### Initial Setup
 
-1. **Create Admin User** (via MongoDB shell or API)
-   ```javascript
-   // Use the registration API endpoint
-   POST /api/auth/register
-   {
-     "email": "admin@company.com",
-     "password": "securepassword",
-     "name": "Admin User",
-     "role": "ADMIN"
-   }
-   ```
+1. **Create Admin User**
 
-2. **Login** at `/login`
+   **Option A: Using Setup Script (Recommended)**
+   ```bash
+   npm install -D tsx
+   npm run setup-admin
+   ```
+   
+   **Option B: Using Setup API**
+   ```bash
+   curl -X POST http://localhost:3000/api/setup/create-admin \
+     -H "Content-Type: application/json" \
+     -d '{"email":"admin@company.com","password":"Admin123!","name":"Admin User"}'
+   ```
+   
+   See [SETUP_ADMIN.md](./SETUP_ADMIN.md) for detailed instructions.
+
+2. **Login** at `/login` with your admin credentials
 
 3. **Register Users** via Admin dashboard
 
